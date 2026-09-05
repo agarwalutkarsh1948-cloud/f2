@@ -1,0 +1,16 @@
+{
+  "name": "land-record-system-backend",
+  "version": "1.0.0",
+  "description": "API backend for the Intelligent Land Record Digitization & Validation System",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "multer": "^1.4.5-lts.1"
+  }
+}

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Land Records Registry — Digitization &amp; Validation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1F3A;
+    --ink-soft:#33455C;
+    --paper:#F3EEE1;
+    --paper-line:#DED5BC;
+    --paper-raised:#FBF8F0;
+    --teal:#1F6F5C;
+    --teal-deep:#154A3F;
+    --bronze:#A9793F;
+    --text-on-paper:#211D14;
+    --text-muted:#6B6553;
+    --text-on-ink:#F3EEE1;
+    --text-on-ink-muted:#AEB9C9;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--text-on-paper);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+  }
+  h1,h2,h3,.serif{font-family:'Fraunces', serif; font-weight:500;}
+  img,svg{display:block;}
+  a{color:inherit;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 32px;}
+
+  /* ---------- Header ---------- */
+  header{
+    background:var(--ink);
+    color:var(--text-on-ink);
+    border-bottom:1px solid rgba(243,238,225,0.12);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 0;
+  }
+  .mark{display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-size:18px;}
+  .mark .seal{width:26px; height:26px; border-radius:50%; border:1.5px solid var(--bronze); display:flex; align-items:center; justify-content:center; font-size:11px; color:var(--bronze);}
+  .nav ul{list-style:none; display:flex; gap:30px; font-size:14px; color:var(--text-on-ink-muted);}
+  .nav ul a:hover{color:var(--text-on-ink);}
+  .nav-cta{border:1px solid rgba(243,238,225,0.35); padding:8px 16px; border-radius:3px; font-size:13px;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:var(--ink);
+    color:var(--text-on-ink);
+    padding:88px 0 64px;
+    background-image:
+      linear-gradient(rgba(243,238,225,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(243,238,225,0.05) 1px, transparent 1px);
+    background-size:36px 36px;
+  }
+  .hero .kicker{font-size:13px; color:var(--bronze); letter-spacing:0.02em; margin-bottom:18px;}
+  .hero h1{font-size:52px; line-height:1.08; max-width:820px; letter-spacing:-0.01em;}
+  .hero h1 em{font-style:italic; color:#C9A876;}
+  .hero p{font-size:18px; color:var(--text-on-ink-muted); max-width:560px; margin-top:22px;}
+  .hero-actions{display:flex; gap:14px; margin-top:34px;}
+  .btn-primary{background:var(--bronze); color:var(--ink); padding:13px 24px; border-radius:3px; font-size:14px; font-weight:600; border:none; cursor:pointer;}
+  .btn-ghost{background:transparent; color:var(--text-on-ink); padding:13px 24px; border-radius:3px; font-size:14px; border:1px solid rgba(243,238,225,0.3); cursor:pointer;}
+
+  /* ---------- Ledger stat strip ---------- */
+  .ledger{
+    background:var(--paper-raised);
+    border-bottom:1px solid var(--paper-line);
+  }
+  .ledger .wrap{
+    display:grid; grid-template-columns:repeat(4,1fr);
+  }
+  .ledger-item{padding:26px 0; border-left:1px solid var(--paper-line);}
+  .ledger-item:first-child{border-left:none;}
+  .ledger-item .num{font-family:'Fraunces',serif; font-size:34px; color:var(--teal-deep);}
+  .ledger-item .lbl{font-size:13px; color:var(--text-muted); margin-top:4px;}
+
+  /* ---------- Section heading ---------- */
+  .section{padding:80px 0;}
+  .section-head{max-width:620px; margin-bottom:48px;}
+  .section-head h2{font-size:32px;}
+  .section-head p{color:var(--text-muted); margin-top:12px; font-size:16px;}
+
+  /* ---------- Pipeline (4 layers) ---------- */
+  .layer{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    gap:24px;
+    padding:32px 0;
+    border-top:1px solid var(--paper-line);
+  }
+  .layer:last-child{border-bottom:1px solid var(--paper-line);}
+  .layer-badge{
+    width:44px; height:44px; border-radius:50%;
+    background:var(--ink); color:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-size:16px;
+  }
+  .layer-body h3{font-size:21px; margin-bottom:6px;}
+  .layer-body .sub{color:var(--text-muted); font-size:14px; margin-bottom:18px;}
+  .chips{display:flex; gap:12px; flex-wrap:wrap;}
+  .chip{
+    background:var(--paper-raised); border:1px solid var(--paper-line);
+    border-radius:6px; padding:14px 16px; flex:1; min-width:200px;
+  }
+  .chip .t{font-size:14px; font-weight:600; margin-bottom:4px;}
+  .chip .d{font-size:13px; color:var(--text-muted); line-height:1.5;}
+  .layer.accent-teal .layer-badge{background:var(--teal-deep);}
+  .layer.accent-bronze .layer-badge{background:var(--bronze); color:var(--ink);}
+
+  /* ---------- Outcomes band ---------- */
+  .outcomes{background:var(--ink); color:var(--text-on-ink); padding:56px 0;}
+  .outcomes .wrap{display:grid; grid-template-columns:repeat(3,1fr); gap:32px;}
+  .outcome h4{font-size:15px; color:var(--bronze); margin-bottom:8px; font-weight:600;}
+  .outcome p{font-size:14px; color:var(--text-on-ink-muted); line-height:1.6;}
+
+  /* ---------- Dashboard preview ---------- */
+  .dash-card{
+    background:var(--paper-raised);
+    border:1px solid var(--paper-line);
+    border-radius:8px;
+    padding:28px;
+  }
+  .dash-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:22px;}
+  .dash-top h3{font-size:18px;}
+  .status{font-size:12px; padding:4px 10px; border-radius:20px; background:rgba(31,111,92,0.12); color:var(--teal-deep);}
+  table{width:100%; border-collapse:collapse; font-size:14px;}
+  th{text-align:left; color:var(--text-muted); font-weight:500; padding:10px 8px; border-bottom:1px solid var(--paper-line); font-size:13px;}
+  td{padding:12px 8px; border-bottom:1px solid var(--paper-line);}
+  .pill{font-size:12px; padding:3px 9px; border-radius:20px;}
+  .pill.verified{background:rgba(31,111,92,0.12); color:var(--teal-deep);}
+  .pill.pending{background:rgba(169,121,63,0.14); color:var(--bronze);}
+  .pill.flagged{background:rgba(178,58,46,0.12); color:#8C3324;}
+
+  /* ---------- Footer ---------- */
+  footer{padding:40px 0; border-top:1px solid var(--paper-line);}
+  footer .wrap{display:flex; justify-content:space-between; font-size:13px; color:var(--text-muted);}
+
+  @media (max-width:720px){
+    .hero h1{font-size:36px;}
+    .ledger .wrap{grid-template-columns:repeat(2,1fr);}
+    .ledger-item:nth-child(3){border-left:none;}
+    .outcomes .wrap{grid-template-columns:1fr;}
+    .layer{grid-template-columns:1fr;}
+    .nav ul{display:none;}
+  }
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="mark"><span class="seal">LR</span>Land Records Registry</div>
+    <ul>
+      <li><a href="#pipeline">Pipeline</a></li>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#outcomes">Outcomes</a></li>
+    </ul>
+    <a class="nav-cta" href="#dashboard">Officer sign in</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">Intelligent land record digitization &amp; validation</p>
+    <h1>Every deed, khasra, and survey sheet — <em>read once, verified forever.</em></h1>
+    <p>Old paper records go in. A four-layer pipeline reads them, checks them against every other record on file, and stores the result somewhere a title dispute can't touch.</p>
+    <div class="hero-actions">
+      <button class="btn-primary">Start digitizing</button>
+      <button class="btn-ghost">View the pipeline</button>
+    </div>
+  </div>
+</section>
+
+<div class="ledger">
+  <div class="wrap">
+    <div class="ledger-item"><div class="num">1,284</div><div class="lbl">Records digitized today</div></div>
+    <div class="ledger-item"><div class="num">98.4%</div><div class="lbl">OCR field accuracy</div></div>
+    <div class="ledger-item"><div class="num">37</div><div class="lbl">Records flagged for review</div></div>
+    <div class="ledger-item"><div class="num">4.2s</div><div class="lbl">Avg. validation time</div></div>
+  </div>
+</div>
+
+<section class="section" id="pipeline">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>A four-layer pipeline</h2>
+      <p>Each record moves through acquisition, validation, storage, and interface — in that order, with nothing skipped.</p>
+    </div>
+
+    <div class="layer">
+      <div class="layer-badge">1</div>
+      <div class="layer-body">
+        <h3>Data acquisition</h3>
+        <p class="sub">Paper into pixels, pixels into text</p>
+        <div class="chips">
+          <div class="chip"><div class="t">Scanners</div><div class="d">Paper records, deeds, survey sheets</div></div>
+          <div class="chip"><div class="t">Old maps</div><div class="d">Historical maps, cadastral records, land plots</div></div>
+          <div class="chip"><div class="t">OCR</div><div class="d">Text extraction, handwriting recognition, multilingual</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer accent-teal">
+      <div class="layer-badge">2</div>
+      <div class="layer-body">
+        <h3>AI validation engine</h3>
+        <p class="sub">Every claim checked against every other record</p>
+        <div class="chips">
+          <div class="chip"><div class="t">Cross-validation</div><div class="d">Data consistency checks, duplicate detection, error flagging</div></div>
+          <div class="chip"><div class="t">Chain of title</div><div class="d">Ownership history, transfer verification, timeline audit</div></div>
+          <div class="chip"><div class="t">Fraud detection</div><div class="d">Anomaly detection, forgery analysis, risk scoring</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer accent-bronze">
+      <div class="layer-badge">3</div>
+      <div class="layer-body">
+        <h3>Secure storage</h3>
+        <p class="sub">Once verified, a record can't quietly change</p>
+        <div class="chips">
+          <div class="chip"><div class="t">GIS mapping</div><div class="d">Geospatial data, parcel boundaries, map layers</div></div>
+          <div class="chip"><div class="t">Blockchain ledger</div><div class="d">Immutable records, transaction log, tamper-proof hash</div></div>
+          <div class="chip"><div class="t">PostgreSQL</div><div class="d">Structured records, query engine, relational storage</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer">
+      <div class="layer-badge">4</div>
+      <div class="layer-body">
+        <h3>User interface</h3>
+        <p class="sub">The same record, three different audiences</p>
+        <div class="chips">
+          <div class="chip"><div class="t">Officer dashboard</div><div class="d">Case review, approval workflow, audit logs</div></div>
+          <div class="chip"><div class="t">Farmer mobile app</div><div class="d">Record access, status tracking, push notifications</div></div>
+          <div class="chip"><div class="t">Bank API</div><div class="d">Loan eligibility, collateral check, verification API</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="dashboard" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>What the officer sees</h2>
+      <p>A live queue of records moving through validation, with nothing hidden behind another screen.</p>
+    </div>
+    <div class="dash-card">
+      <div class="dash-top">
+        <h3>Recent records</h3>
+        <span class="status">Layer 2 · AI validation running</span>
+      </div>
+      <table>
+        <tr><th>Khasra no.</th><th>Owner</th><th>Village</th><th>Status</th></tr>
+        <tr><td>KH-2291</td><td>R. Sharma</td><td>Rajpur</td><td><span class="pill verified">Verified</span></td></tr>
+        <tr><td>KH-2292</td><td>A. Bisht</td><td>Doiwala</td><td><span class="pill pending">Pending review</span></td></tr>
+        <tr><td>KH-2293</td><td>S. Rawat</td><td>Vikasnagar</td><td><span class="pill flagged">Flagged</span></td></tr>
+        <tr><td>KH-2294</td><td>M. Negi</td><td>Rajpur</td><td><span class="pill verified">Verified</span></td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="outcomes" id="outcomes">
+  <div class="wrap">
+    <div class="outcome">
+      <h4>Security</h4>
+      <p>Role-based access and encryption at rest, so a viewer permission can never become an edit permission by accident.</p>
+    </div>
+    <div class="outcome">
+      <h4>Integration</h4>
+      <p>REST API with real-time processing, built so the mobile app and bank API read the same source of truth as the dashboard.</p>
+    </div>
+    <div class="outcome">
+      <h4>Outcomes</h4>
+      <p>Faster processing, clearer transparency, and a record of who touched what — trust that's checkable, not just claimed.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Land Records Registry</span>
+    <span>Built on the four-layer digitization &amp; validation architecture</span>
+  </div>
+</footer>
+
+</body>
+</html>
